@@ -1,0 +1,230 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+        #statusStyle {
+            width: 90px;
+            height: 90px;
+            left: 50%;
+            top: 250px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h4>Authorization icons</h4>
+        <p>Approved: <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </p>
+        <p>Rejected: <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </p>
+        <p>Pending: <span class="glyphicon glyphicon-time" aria-hidden="true"></span> </p>
+    </div>
+
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name Proposal</th>
+                    <th>Creator</th>
+                    <th>Manager Authorization</th>
+                    <th>CEO Authorizathion</th>
+                    <th>Proposal</th>
+                </tr>
+            </thead>
+            <tbody id="newProposals">
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">My Proposal Status</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <a class="list-group-item active">
+                            <label id="proposalName">Proposal</label>
+                        </a>
+                        <a class="list-group-item">
+                            <label for="ID">ID:</label>
+                            <span id="ID">--</span>
+                        </a>
+                        <a class="list-group-item">
+                            <label for="Author">Author:</label>
+                            <span id="Author">--</span>
+                        </a>
+                        <a class="list-group-item">
+                            <label for="Description">Description:</label>
+                            <span id="Description">--</span>
+                        </a>
+                        <a class="list-group-item">
+                            <label for="time">Time Estimated:</label>
+                            <span id="time">--</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <label for="Authoriz">Authorizathion</label>
+                    <select class="form-control" id="Authoriz">
+                        <option></option>
+                        <option>Approved</option>
+                        <option>Rejected</option>
+                        <option>Pending</option>
+                    </select>
+                    <div id="remarks">
+                        <!--                        <p>Remarks</p>-->
+                    </div>
+                    <br>
+                    <div id="statusStyle">
+                        <span id="statusStyleIcon" aria-hidden="true"></span>
+                    </div>
+                    <button id="sumb" type="button" class="btn btn-success" onClick="updateStatus()" data-dismiss="modal">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        console.log('inicio');
+        var listName = "NewProposals";
+        var siteUrl = "http://intranet.ngt.com";
+        var items;
+
+        _spBodyOnLoadFunctionNames.push("mainFunction");
+
+       
+        function mainFunction() {
+            console.log('main');
+            var context = new SP.ClientContext(siteUrl);
+            var web = context.get_web();
+            var list = web.get_lists().getByTitle(listName);
+            var query = SP.CamlQuery.createAllItemsQuery();
+            var allItems = list.getItems(query);
+            context.load(allItems, 'Include(Id,Title,Author,man_approve,ceo_approve,Description0,estimated_time)');
+            context.executeQueryAsync(Function.createDelegate(this, function () {
+                    onQuerySuccess(allItems);
+                })
+                , Function.createDelegate(this, this.onQueryFailed));
+        }
+
+        function onQuerySuccess(allItems) {
+            console.log('queru success');
+            var ListEnumerator = allItems.getEnumerator();
+            while (ListEnumerator.moveNext()) {
+                var currentItem = ListEnumerator.get_current();
+                // do something with your list item
+                var myID = currentItem.get_id();
+                var myTitle = currentItem.get_item('Title');
+                var myName = currentItem.get_item('Title');
+                var myAuthor = currentItem.get_item('Author').get_lookupValue();
+                var myManAprov = currentItem.get_item('man_approve');
+                var myCeoAprov = currentItem.get_item('ceo_approve');
+                var myDescription = currentItem.get_item('Description0');
+                var myTime = currentItem.get_item('estimated_time');
+                var attrs = " myID=\"" + myID + "\" " + " myName=\"" + myName + "\" " + " myAuthor=\"" + myAuthor + "\" " + " myDescription=\"" + myDescription + "\" " + " myTime=\"" + myTime + "\" ";
+                $('#newProposals')
+                    .append($("<tr data-target=\"#myModal\"><td>" + myTitle + "</td><td>" + myName + "</td><td>" + myAuthor + "</td><td>" + statusIcon(myManAprov) + "</td><td>" + statusIcon(myCeoAprov) + "</td><td><button " + attrs + " id=\"bt" + myID + "\" type=\"button\" class=\"btn btn-default btn-info\" data-toggle=\"modal\" data-target=\"#myModal\" onClick=\"setValueModal('#bt" + myID + "');\">View</button><td></tr>"));
+            }
+        }
+
+        function onQueryFailed(sender, args) {
+            console.log('qry fail');
+            alert('Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+        }
+
+        function updateStatus() {
+            console.log('update status');
+            var clientContext = new SP.ClientContext(siteUrl);
+            var oList = clientContext.get_web().get_lists().getByTitle(listName);
+            var idNumber = parseInt($("#ID").text());
+            this.oListItem = oList.getItemById(idNumber);
+            //var d = new Date();
+            //var month = d.getMonth() + 1;
+            //var day = d.getDate();
+            //var currentDate = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' +d.getFullYear();          
+            var authorization = $('#Authoriz option:selected').val();
+            oListItem.set_item('man_approve', authorization);
+            //oListItem.set_item('man_date', currentDate);
+            //if(authorization=="Pending"){
+              //  oListItem.set_item('man_remark', $("#remarksText").text());
+            //}
+            oListItem.update();
+            clientContext.executeQueryAsync(Function.createDelegate(this, this.onQueryUpdateSucceeded), Function.createDelegate(this, this.onQueryUpdateFailed));
+        }
+
+        function onQueryUpdateSucceeded() {
+            console.log('status success');
+            alert('Status updated');
+            location.reload();
+        }
+
+        function onQueryUpdateFailed(sender, args) {
+console.log('status fail');
+            alert('Update failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+        }
+
+        function setValueModal(btID) {
+            console.log('value modal');
+            $("#proposalName").text($(btID).attr("myName"));
+            $("#ID").text($(btID).attr("myID"));
+            $("#Author").text($(btID).attr("myAuthor"));
+            $("#Description").text($(btID).attr("myDescription"));
+            $("#time").text($(btID).attr("myTime"));
+
+        }
+
+        function statusIcon(status) {
+            console.log('sttusicon');
+            if (status == null) {
+                return "";
+            } else if (status == "Approved") {
+                return "<span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span>";
+            } else if (status == "Rejected") {
+                return "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>";
+            } else if (status == "Pending") {
+                return "<span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $("#Authoriz").change(function () {
+            console.log('atoriz');
+            var target = $('#Authoriz option:selected').val();
+            if (target == "Approved") {
+                $("#remarks").empty();
+                $("#statusStyleIcon").removeClass();
+                $("#statusStyleIcon").addClass("glyphicon glyphicon glyphicon-ok");
+                $("#sumb").removeClass();
+                $("#sumb").addClass("btn btn-success");
+            } else if (target == "Rejected") {
+                $("#remarks").empty();
+                $("#statusStyleIcon").removeClass();
+                $("#statusStyleIcon").addClass("glyphicon glyphicon-remove");
+                $("#sumb").removeClass();
+                $("#sumb").addClass("btn btn-danger");
+            } else if (target == "Pending") {
+                $("#remarks").append("<p>Remarks</p><textarea class=\"form-control\" rows=\"5\" id=\"remarksText\"></textarea>");
+                $("#statusStyleIcon").removeClass();
+                $("#statusStyleIcon").addClass("glyphicon glyphicon-time");
+                $("#sumb").removeClass();
+                $("#sumb").addClass("btn btn-primary");
+
+            }
+        });
+    </script>
+</body>
+
+</html>

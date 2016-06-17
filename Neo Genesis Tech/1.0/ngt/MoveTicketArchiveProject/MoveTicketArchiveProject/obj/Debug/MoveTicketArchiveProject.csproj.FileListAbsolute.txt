@@ -1,0 +1,5 @@
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketArchiveProject\MoveTicketArchiveProject\bin\Debug\MoveTicketArchiveProject.dll
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketArchiveProject\MoveTicketArchiveProject\bin\Debug\MoveTicketArchiveProject.pdb
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketArchiveProject\MoveTicketArchiveProject\obj\Debug\MoveTicketArchiveProject.dll
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketArchiveProject\MoveTicketArchiveProject\obj\Debug\MoveTicketArchiveProject.pdb
+C:\Users\SPAdmin\Documents\Visual Studio 2012\Projects\MoveTicketArchiveProject\MoveTicketArchiveProject\obj\Debug\MoveTicketArchiveProject.csprojResolveAssemblyReference.cache

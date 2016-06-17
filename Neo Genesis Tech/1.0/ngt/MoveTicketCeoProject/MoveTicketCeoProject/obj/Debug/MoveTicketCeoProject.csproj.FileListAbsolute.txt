@@ -1,0 +1,4 @@
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketCeoProject\MoveTicketCeoProject\bin\Debug\MoveTicketCeoProject.dll
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketCeoProject\MoveTicketCeoProject\bin\Debug\MoveTicketCeoProject.pdb
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketCeoProject\MoveTicketCeoProject\obj\Debug\MoveTicketCeoProject.dll
+c:\users\spadmin\documents\visual studio 2012\Projects\MoveTicketCeoProject\MoveTicketCeoProject\obj\Debug\MoveTicketCeoProject.pdb

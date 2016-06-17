@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="a874851d-47dc-4a1f-9e6e-bce4ced1d676" solutionId="a874851d-47dc-4a1f-9e6e-bce4ced1d676" resetWebServer="false" sharePointProductVersion="15.0" name="MoveTicketCeoProject" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="34528e2d-ab61-444c-ad6c-8f99b790218b" />
+  </features>
+</package>

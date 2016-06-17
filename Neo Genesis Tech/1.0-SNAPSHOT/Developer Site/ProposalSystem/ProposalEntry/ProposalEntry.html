@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <form role="form">
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="Name" class="form-control" id="Name" placeholder="Enter Name of your proposal">
+        </div>
+        <div class="form-group">
+            <label for="commDescriptionent">Description:</label>
+            <textarea class="form-control" rows="5" id="Description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="timeEstimated">Time Estimated:</label>
+            <select class="form-control" id="timeEstimated">
+                <option>1 week</option>
+                <option>2 week</option>
+                <option>3 week</option>
+                <option>1 month</option>
+                <option>2 month</option>
+                <option>3 month</option>
+                <option>4 month</option>
+            </select>
+        </div>
+
+        <input type="button" id="update" value="Submit" class="btn btn-primary" onclick="addItemList()" />
+    </form>
+
+    <script type="text/javascript" src="~/_layouts/15/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var listName = "proposalSys";
+        var siteUrl = "http://intranet.ngt.com/";
+        var currentUser;
+        var curentUserName;
+
+        //        _spBodyOnLoadFunctionNames.push("mainFunction");
+        //
+        //        function mainFunction() {
+        //            this.clientContext = new SP.ClientContext(siteUrl);
+        //            this.oWeb = clientContext.get_web();
+        //            currentUser = this.oWeb.get_currentUser();
+        //            this.clientContext.load(currentUser);
+        //            this.clientContext.executeQueryAsync(Function.createDelegate(this, this.onQuerySucceededMain), Function.createDelegate(this, this.onQueryFailedMain));
+        //        }
+        //
+        //        function onQuerySucceededMain() {
+        //            curentUserName = currentUser.get_loginName();
+        //            $("#Author").val(curentUserName);
+        //        }
+        //
+        //        function onQueryFailedMain(sender, args) {
+        //            alert('Error for get the UserName \nError: ' + args.get_message() + '\nStackTrace: ' + args.get_stackTrace());
+        //        }
+
+
+        function addItemList() {
+            var clientContext = new SP.ClientContext(siteUrl);
+            var oList = clientContext.get_web().get_lists().getByTitle(listName);
+            var itemCreateInfo = new SP.ListItemCreationInformation();
+            this.oListItem = oList.addItem(itemCreateInfo);
+            //            oListItem.set_item('Title', "TitleTest" + oListItem.get_id());
+            //            //oListItem.set_item('Usuario', curentUserName);
+            //            oListItem.set_item('Status', "StatusTest");
+            //            oListItem.set_item('Name', "NameTest");
+            //            oListItem.set_item('Doc', "DocTest");
+            //            oListItem.set_item('Description', "DescriptionTest");
+            //            oListItem.set_item('EstimatedTime', "EstimatedTimeTest");
+            oListItem.set_item('Title', "Prop_" + $("#Name").val());
+            oListItem.set_item('NameProposal', $("#Name").val());
+            oListItem.set_item('Description', $("#Description").val());
+            oListItem.set_item('estimated_time', $("#timeEstimated").val());
+            oListItem.set_item('status', "In Progress");
+
+            oListItem.update();
+
+            clientContext.load(oListItem);
+
+            clientContext.executeQueryAsync(Function.createDelegate(this, this.onQuerySucceeded), Function.createDelegate(this, this.onQueryFailed));
+        }
+
+        function onQuerySucceeded() {
+            alert('Proposal Id: ' + oListItem.get_id() + ' Created');
+            location.reload();
+        }
+
+        function onQueryFailed(sender, args) {
+
+            alert('Error trying to add new Item, Request failed. ' + args.get_message() + '\n' + args.get_stackTrace());
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Receivers ListTemplateId="101">
+      <Receiver>
+        <Name>MoveTicketCeoItemUpdated</Name>
+        <Type>ItemUpdated</Type>
+        <Assembly>MoveTicketCeoProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2993140a68d7cab9</Assembly>
+        <Class>MoveTicketCeoProject.MoveTicketCeo.MoveTicketCeo</Class>
+        <SequenceNumber>10000</SequenceNumber>
+      </Receiver>
+  </Receivers>
+</Elements>

@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+        #statusStyle {
+            width: 90px;
+            height: 90px;
+            left: 250px;
+            top: 250px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Authorization System</h2>
+        <div class="list-group">
+            <a class="list-group-item active">
+                <label>Proposal</label>
+            </a>
+            <a class="list-group-item">
+                <label for="title">Title:</label>
+                <span id="title">--</span>
+            </a>
+            <a class="list-group-item">
+                <label for="Author">Author:</label>
+                <span id="Author">--</span>
+            </a>
+            <a class="list-group-item">
+                <label for="Document">Document:</label>
+                <span id="Document">--</span>
+            </a>
+            <a class="list-group-item">
+                <label for="Description">Description:</label>
+                <span id="Description">--</span>
+            </a>
+            <a class="list-group-item">
+                <label for="time">Time Estimated:</label>
+                <span id="time">--</span>
+            </a>
+        </div>
+        <form role="form">
+            <div class="form-group">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <label for="Authoriz">Authorizathion:</label>
+                            <select class="form-control" id="Authoriz">
+                                <option>Approved</option>
+                                <option>Rejected</option>
+                                <option>Pending</option>
+                                <option>In Progress</option>
+                            </select>
+                            <br>
+                            <button id="sumb" type="button" class="btn btn-success">Submit</button>
+                        </td>
+                        <td>
+                            <br>
+                            <div id="statusStyle">
+                                <span id="statusStyleIcon" class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+        $("#Authoriz").change(function () {
+            var target = $('#Authoriz option:selected').val();
+            if(target=="Approved"){
+                $( "#statusStyleIcon" ).removeClass();
+                $( "#statusStyleIcon" ).addClass( "glyphicon glyphicon glyphicon-ok" ); 
+                $( "#sumb" ).removeClass();
+                $( "#sumb" ).addClass( "btn btn-success" ); 
+            } else if(target=="Rejected"){
+                $( "#statusStyleIcon" ).removeClass();  
+                $( "#statusStyleIcon" ).addClass( "glyphicon glyphicon-remove" );
+                $( "#sumb" ).removeClass();
+                $( "#sumb" ).addClass( "btn btn-danger" );
+            } else if(target=="Pending"){
+                $( "#statusStyleIcon" ).removeClass();  
+                $( "#statusStyleIcon" ).addClass( "glyphicon glyphicon-time" );
+                $( "#sumb" ).removeClass();
+                $( "#sumb" ).addClass( "btn btn-primary" );
+            } else if(target=="In Progress"){
+                $( "#statusStyleIcon" ).removeClass();  
+                $( "#statusStyleIcon" ).addClass( "glyphicon glyphicon-road" );
+                $( "#sumb" ).removeClass();
+                $( "#sumb" ).addClass( "btn btn-primary" );
+            }
+        });
+    </script>
+    <script>
+        
+    </script>
+</body>
+
+</html>

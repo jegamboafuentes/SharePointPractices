@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="list-group">
+        <a href="http://intranet.ngt.com/SitePages/Home.aspx" class="list-group-item active" style="text-align: center;">
+            <h3>NGT</h3>
+            <img class="img-responsive img-rounded" style="width:35%;height:auto;padding: 2%; margin: 0 auto;" src="http://image.slidesharecdn.com/logo-130425064050-phpapp02/95/logo-of-banyan-technologies-1-638.jpg?cb=1461869785" alt="UserPhoto">
+        </a>
+        <a class="list-group-item list-group-item-info">
+            <label>Welcome: </label>
+            <label id="userName">User</label>
+            <img id="profilePicture" class="img-responsive img-circle " style="width:30%;height:auto;padding: 2%; margin: 0 auto;" src="https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png" alt="UserPhoto">
+        </a>
+        <a id="developerSite" href="/developers/" class="list-group-item">Developer</a>
+        <a id="managerSite" href="/manager/" class="list-group-item">Manager</a>
+        <a id="ceoSite" href="/CEO/" class="list-group-item">CEO</a>
+        <a href="http://intranet.ngt.com/_layouts/15/closeconnection.aspx?loginasanotheruser=true" class="list-group-item list-group-item-danger">LOGOUT</a>
+    </div>
+    <script type="text/javascript" src="~/_layouts/15/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var listName = "proposalSys";
+        var siteUrl = "http://intranet.ngt.com/";
+        var currentUser;
+        var curentUserName;
+
+        _spBodyOnLoadFunctionNames.push("mainFunction");
+
+        function mainFunction() {
+            this.clientContext = new SP.ClientContext(siteUrl);
+            this.oWeb = clientContext.get_web();
+            currentUser = this.oWeb.get_currentUser();
+            this.clientContext.load(currentUser);
+            this.clientContext.executeQueryAsync(Function.createDelegate(this, this.onQuerySucceededMain), Function.createDelegate(this, this.onQueryFailedMain));
+        }
+
+        function onQuerySucceededMain() {
+            curentUserName = currentUser.get_loginName();
+            var usernameDots = curentUserName.substr(curentUserName.indexOf("\\") + 1);
+            var fullUserName = (usernameDots.split('.').join(" ")).toUpperCase();
+            $("#userName").text(fullUserName);
+            profileAutorizathion(fullUserName)
+        }
+
+        function onQueryFailedMain(sender, args) {
+            alert('Error for get the UserName \nError: ' + args.get_message() + '\nStackTrace: ' + args.get_stackTrace());
+        }
+
+        function profileAutorizathion(user) {
+            if (user == "STEAVE WOZNIAK") {
+                $("#profilePicture").attr("src", "http://a5.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTE1ODA0OTcxODMwMDUyMzY1.jpg");
+                $("#managerSite").remove();
+                $("#ceoSite").remove();
+            } else if (user == "ALAN KAY") {
+                $("#profilePicture").attr("src", "http://www.wired.com/images_blogs/photos/uncategorized/2008/11/03/alan_kay_photo400dpi.jpg");
+                $("#managerSite").remove();
+                $("#ceoSite").remove();
+            } else if (user == "MARCIAN HOFF") {
+                $("#profilePicture").attr("src", "http://www.computerhope.com/people/pictures/marcian_hoff.jpg");
+                $("#managerSite").remove();
+                $("#ceoSite").remove();
+            } else if (user == "ALAN TURING") {
+                $("#profilePicture").attr("src", "http://a2.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTE5NDg0MDU1MTUzMTE2Njg3.jpg");
+                $("#managerSite").remove();
+                $("#ceoSite").remove();
+            } else if (user == "PAUL ALLEN") {
+                $("#profilePicture").attr("src", "https://pbs.twimg.com/profile_images/558434025954488320/E4r4Rlc_.jpeg");
+                $("#managerSite").remove();
+                $("#ceoSite").remove();
+            } else if (user == "STEAVE JOBS") {
+                $("#profilePicture").attr("src", "http://a5.files.biography.com/image/upload/c_fit,cs_srgb,dpr_1.0,h_1200,q_80,w_1200/MTE5NDg0MDU0NTIzODQwMDE1.jpg");
+                $("#ceoSite").remove();
+            } else if (user == "BILL GATES") {
+                $("#profilePicture").attr("src", "https://pbs.twimg.com/profile_images/558109954561679360/j1f9DiJi.jpeg");
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Id="302075c3-c5af-4c2d-9635-1682ee92d2c9" Scope="Web" Title="MoveTicketCeoProject Feature1">
+  <ElementManifests>
+    <ElementManifest Location="MoveTicketCeo\Elements.xml" />
+  </ElementManifests>
+</Feature>

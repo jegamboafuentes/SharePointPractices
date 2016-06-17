@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Solution xmlns="http://schemas.microsoft.com/sharepoint/" SolutionId="a874851d-47dc-4a1f-9e6e-bce4ced1d676" SharePointProductVersion="15.0">
+  <Assemblies>
+    <Assembly Location="MoveTicketCeoProject.dll" DeploymentTarget="GlobalAssemblyCache" />
+  </Assemblies>
+  <FeatureManifests>
+    <FeatureManifest Location="MoveTicketCeoProject_Feature1\Feature.xml" />
+  </FeatureManifests>
+</Solution>
