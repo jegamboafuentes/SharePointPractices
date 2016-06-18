@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.0/raphael-min.js"></script>
+    <script type="text/javascript" src="morris.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="angular.min.js"></script>
+</head>
+
+<body>
+    <div class="container" ng-app="myApp" ng-controller="personalControler">
+        <div id="row">
+            <div class="col-md-4">
+                <h1>Seller:</h1>
+                <select class="form-control ng-valid ng-touched ng-not-empty ng-dirty ng-valid-parse" name="singleSelect" id="singleSelect" ng-model="data.singleSelect">   
+                <option y2010="5000" y2011="7000" y2012="9000" y2013="8500" y2014="7500" y2015="6900" y2016="3800"> Enrique </option><option y2010="8600" y2011="7855" y2012="4522" y2013="6582" y2014="7852" y2015="4820" y2016="5600"> John </option></select>
+            </div>
+            <div class="col-md-8">
+                <h1>{{data.singleSelect}}</h1>
+            </div>
+        </div>
+        <div id="row">
+            <div class="col-md-12">
+                <div id="myfirstchart" style="height: 250px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('personalControler', function ($scope) {
+            $scope.chartName = function () {
+                return $scope.data.singleSelect + "Sells";
+            };
+        });
+    </script>
+    <script type="text/javascript" src="eriks.js" >
+        
+    </script>
+</body>
+
+</html>
